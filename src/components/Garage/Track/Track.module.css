@@ -1,0 +1,51 @@
+.garageTable {
+   width: 100%;
+}
+
+.trackHeader {
+   display: grid;
+   grid-template-columns: var(--lane-meta-width) 1fr minmax(90px, 130px);
+   gap: 14px;
+   padding: 0 20px 12px;
+   font-size: var(--font-size-xs);
+   font-family: var(--font-display);
+   font-weight: 600;
+   color: var(--text-muted);
+   text-transform: uppercase;
+   letter-spacing: 0.12em;
+}
+
+.track {
+   position: relative;
+   background: var(--bg-surface);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-lg);
+   padding: 8px 20px 8px 12px;
+   overflow: hidden;
+   box-shadow: var(--shadow-md), var(--shadow-glow);
+   backdrop-filter: blur(10px);
+}
+
+.track::before {
+   content: '';
+   position: absolute;
+   inset: 0;
+   background: linear-gradient(135deg, rgba(0, 229, 255, 0.04) 0%, transparent 40%, rgba(255, 45, 106, 0.03) 100%);
+   pointer-events: none;
+}
+
+@media (max-width: 768px) {
+   .trackHeader {
+      display: none;
+   }
+
+   .track {
+      padding: 6px 14px 6px 8px;
+   }
+}
+
+@media (max-width: 576px) {
+   .track {
+      border-radius: var(--radius-md);
+   }
+}

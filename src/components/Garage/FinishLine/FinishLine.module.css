@@ -1,0 +1,25 @@
+.finishLine {
+   position: absolute;
+   right: 0;
+   top: 0;
+   bottom: 0;
+   width: 16px;
+   display: flex;
+   z-index: 3;
+   box-shadow: -4px 0 16px rgba(0, 0, 0, 0.3);
+}
+
+.background {
+   flex: 1;
+   background: repeating-linear-gradient(180deg, #f4f6fc 0 5px, #0a0c12 5px 10px);
+}
+
+.background:nth-child(even) {
+   background: repeating-linear-gradient(180deg, #0a0c12 0 5px, #f4f6fc 5px 10px);
+}
+
+@media (max-width: 576px) {
+   .finishLine {
+      width: 10px;
+   }
+}

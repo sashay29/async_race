@@ -1,0 +1,19 @@
+.panel {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 20px;
+   padding: 24px;
+   background: var(--bg-surface);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-lg);
+   margin-bottom: 24px;
+   box-shadow: var(--shadow-sm), var(--shadow-glow);
+   backdrop-filter: blur(12px);
+}
+
+@media (max-width: 768px) {
+   .panel {
+      flex-direction: column;
+      padding: 18px;
+   }
+}

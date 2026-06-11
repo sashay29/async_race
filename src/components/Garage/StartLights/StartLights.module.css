@@ -1,0 +1,34 @@
+.startLight {
+   display: flex;
+   flex-direction: row;
+   gap: 5px;
+   padding: 5px 8px;
+   background: rgba(0, 0, 0, 0.35);
+   border: 1px solid var(--border);
+   border-radius: 999px;
+}
+
+.light {
+   width: 7px;
+   height: 7px;
+   border-radius: 50%;
+   background: #2a3040;
+   transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.red {
+   background: var(--danger);
+   box-shadow: 0 0 8px rgba(255, 82, 82, 0.7);
+}
+
+.green {
+   background: var(--success);
+   box-shadow: 0 0 10px rgba(0, 230, 118, 0.8);
+}
+
+@media (max-width: 576px) {
+   .light {
+      width: 6px;
+      height: 6px;
+   }
+}

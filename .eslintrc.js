@@ -1,0 +1,63 @@
+module.exports = {
+   env: {
+      browser: true,
+      es2021: true,
+      node: true,
+   },
+   extends: [
+      'eslint:recommended',
+      'plugin:react/recommended',
+      'plugin:react-hooks/recommended',
+      'airbnb',
+      'prettier',
+   ],
+   rules: {
+      'space-in-parens': 'off',
+      'react/jsx-curly-spacing': 'off',
+      'max-lines-per-function': ['error', { max: 40 }],
+      'import/no-unresolved': 'off',
+      'import/extensions': 'off',
+      'no-unused-vars': 'off',
+      'no-plusplus': 'off',
+      'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }],
+      'consistent-return': 'off',
+      'react/prop-types': 'off',
+      'react/button-has-type': 'off',
+      'no-nested-ternary': 'off',
+      'no-use-before-define': 'off',
+      'no-param-reassign': 'off',
+      'no-await-in-loop': 'off',
+      'eqeqeq': 'off',
+      'array-callback-return': 'off',
+      'no-shadow': 'off',
+      'no-unused-expressions': 'off',
+      'no-unsafe-optional-chaining': 'off',
+      'react/require-default-props': 'off',
+      'no-restricted-globals': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'import/prefer-default-export': 'off',
+   },
+   plugins: ['react', 'react-hooks', 'import', 'jsx-a11y', 'prettier'],
+   parserOptions: {
+      ecmaVersion: 12,
+      sourceType: 'module',
+      ecmaFeatures: { jsx: true },
+   },
+   settings: {
+      react: { version: 'detect' },
+      'import/resolver': {
+         node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+      },
+   },
+   overrides: [
+      {
+         files: ['**/*.{ts,tsx}'],
+         parser: '@typescript-eslint/parser',
+         plugins: ['@typescript-eslint'],
+         rules: {
+            'no-unused-vars': 'off',
+            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+         },
+      },
+   ],
+};

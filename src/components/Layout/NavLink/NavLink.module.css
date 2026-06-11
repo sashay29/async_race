@@ -1,0 +1,38 @@
+.link {
+   padding: 10px 18px;
+   border-radius: var(--radius-sm);
+   font-size: var(--font-size-sm);
+   font-family: var(--font-display);
+   font-weight: 600;
+   letter-spacing: 0.08em;
+   text-transform: uppercase;
+   color: var(--text-secondary);
+   background: transparent;
+   border: 1px solid transparent;
+   transition: color 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.link:hover {
+   color: var(--text-primary);
+   background: var(--bg-hover);
+   border-color: var(--border);
+}
+
+.link.active {
+   color: var(--accent);
+   background: var(--accent-muted);
+   border-color: rgba(0, 229, 255, 0.3);
+   box-shadow: 0 0 20px rgba(0, 229, 255, 0.12);
+}
+
+.link.disabled {
+   opacity: 0.4;
+   cursor: not-allowed;
+}
+
+@media (max-width: 576px) {
+   .link {
+      padding: 8px 14px;
+      font-size: var(--font-size-xs);
+   }
+}

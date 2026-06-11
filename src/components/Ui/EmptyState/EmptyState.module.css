@@ -1,0 +1,12 @@
+.message {
+   text-align: center;
+   color: var(--text-secondary);
+   font-size: var(--font-size-md);
+   font-weight: var(--font-weight-medium);
+   padding: 56px 28px;
+   background: var(--bg-surface);
+   border: 1px dashed rgba(0, 229, 255, 0.25);
+   border-radius: var(--radius-lg);
+   letter-spacing: 0.02em;
+   box-shadow: var(--shadow-glow);
+}

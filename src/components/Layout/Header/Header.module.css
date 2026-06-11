@@ -1,0 +1,23 @@
+.header {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 16px;
+   padding: 18px 24px;
+   margin-bottom: 24px;
+   background: var(--bg-surface);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-lg);
+   box-shadow: var(--shadow-sm), var(--shadow-glow);
+   backdrop-filter: blur(12px);
+   position: sticky;
+   top: 16px;
+   z-index: 10;
+}
+
+@media (max-width: 576px) {
+   .header {
+      padding: 14px 18px;
+      top: 12px;
+   }
+}

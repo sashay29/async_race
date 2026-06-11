@@ -1,0 +1,25 @@
+.title {
+   text-align: center;
+   margin-top: 20vh;
+   font-size: var(--font-size-2xl);
+   font-weight: 800;
+   color: var(--text-primary);
+   letter-spacing: 0.1em;
+   text-transform: uppercase;
+}
+
+.backLink {
+   margin-top: 24px;
+   text-align: center;
+   font-size: var(--font-size-sm);
+}
+
+.backLink a {
+   color: var(--accent);
+   text-decoration: underline;
+   text-underline-offset: 3px;
+}
+
+.backLink a:hover {
+   color: var(--accent-hover);
+}

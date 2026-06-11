@@ -1,0 +1,19 @@
+.logo {
+   display: flex;
+   align-items: center;
+}
+
+.title {
+   font-size: var(--font-size-lg);
+   font-weight: 800;
+   letter-spacing: 0.12em;
+   text-transform: uppercase;
+   color: var(--text-primary);
+   line-height: 1.1;
+}
+
+@media (max-width: 576px) {
+   .title {
+      font-size: var(--font-size-md);
+   }
+}
