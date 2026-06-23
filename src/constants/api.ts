@@ -60,7 +60,7 @@ const request = async <T>(path: string, options?: FetchOptions): Promise<T | Api
       if (!text) return {} as T;
       return JSON.parse(text) as T;
    } catch {
-      return createError('Network error. Is the API server running on port 3000?');
+      return createError('Network error. Start the API locally (port 3000) or set APP_CONFIG.apiUrl in public/api-config.js.');
    }
 };
 

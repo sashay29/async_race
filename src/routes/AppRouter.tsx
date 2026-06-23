@@ -1,19 +1,17 @@
 import React from 'react';
-import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom';
+import { createHashRouter, Navigate, RouteObject } from 'react-router-dom';
 import App from 'app/App';
 import GaragePage from 'pages/GaragePage/GaragePage';
 import WinnersPage from 'pages/WinnersPage/WinnersPage';
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
 
-const basename = process.env.PUBLIC_URL?.replace(/\/$/, '') || '';
-
-function createAppRouter(): ReturnType<typeof createBrowserRouter> {
+function createAppRouter(): ReturnType<typeof createHashRouter> {
    const routes: RouteObject[] = [
       {
          path: '/',
          element: <App />,
          children: [
-            { index: true, element: <Navigate replace to="garage" /> },
+            { index: true, element: <Navigate replace to="/garage" /> },
             { path: 'garage', element: <GaragePage /> },
             { path: 'winners', element: <WinnersPage /> },
             { path: '*', element: <NotFoundPage /> },
@@ -21,7 +19,7 @@ function createAppRouter(): ReturnType<typeof createBrowserRouter> {
       },
    ];
 
-   return createBrowserRouter(routes, { basename });
+   return createHashRouter(routes);
 }
 
 export default createAppRouter;
