@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom';
+import { createHashRouter, Navigate, RouteObject } from 'react-router-dom';
 import App from 'app/App';
 import GaragePage from 'pages/GaragePage/GaragePage';
 import WinnersPage from 'pages/WinnersPage/WinnersPage';
@@ -7,7 +7,7 @@ import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
 
 const basename = process.env.PUBLIC_URL?.replace(/\/$/, '') || '';
 
-function createAppRouter(): ReturnType<typeof createBrowserRouter> {
+function createAppRouter(): ReturnType<typeof createHashRouter> {
    const routes: RouteObject[] = [
       {
          path: '/',
@@ -21,7 +21,7 @@ function createAppRouter(): ReturnType<typeof createBrowserRouter> {
       },
    ];
 
-   return createBrowserRouter(routes, { basename });
+   return createHashRouter(routes, { basename });
 }
 
 export default createAppRouter;
