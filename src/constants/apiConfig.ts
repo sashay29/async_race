@@ -8,13 +8,7 @@ declare global {
    }
 }
 
-const isLocalAppHost = (): boolean => {
-   if (typeof window === 'undefined') return false;
-   const { hostname } = window.location;
-   return hostname === 'localhost' || hostname === '127.0.0.1';
-};
-
-const readConfiguredUrl = (): string | null => {
+const resolveApiBaseUrl = (): string => {
    if (typeof window !== 'undefined') {
       const runtimeUrl = window.APP_CONFIG?.apiUrl?.trim();
       if (runtimeUrl?.startsWith('http://') || runtimeUrl?.startsWith('https://')) {
@@ -27,21 +21,7 @@ const readConfiguredUrl = (): string | null => {
       return envUrl.replace(/\/$/, '');
    }
 
-   return null;
-};
-
-const resolveApiBaseUrl = (): string => {
-   const configuredUrl = readConfiguredUrl();
-   if (configuredUrl) return configuredUrl;
-
-   if (isLocalAppHost()) return LOCAL_API_URL;
-
-   return '';
+   return LOCAL_API_URL;
 };
 
 export const API_BASE_URL = resolveApiBaseUrl();
-
-export const isApiConfigured = (): boolean => API_BASE_URL.length > 0;
-
-export const API_NOT_CONFIGURED_MESSAGE =
-   'API is not configured. Deploy the /api folder to Render, set APP_CONFIG.apiUrl in public/api-config.js, then run npm run deploy.';

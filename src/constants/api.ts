@@ -1,5 +1,5 @@
 import { GARAGE_PAGE_SIZE, WINNERS_PAGE_SIZE, getRandomCarName, getRandomColor, normalizeCarName, validateCarName } from 'constants/carData';
-import { API_BASE_URL, API_NOT_CONFIGURED_MESSAGE, isApiConfigured } from 'constants/apiConfig';
+import { API_BASE_URL } from 'constants/apiConfig';
 import type { Car, CarInput } from 'store/types/car';
 
 export type WinnerSortField = 'wins' | 'time';
@@ -50,8 +50,6 @@ type FetchOptions = {
 };
 
 const request = async <T>(path: string, options?: FetchOptions): Promise<T | ApiError> => {
-   if (!isApiConfigured()) return createError(API_NOT_CONFIGURED_MESSAGE);
-
    try {
       const response = await fetch(`${API_BASE_URL}${path}`, options);
       if (!response.ok) {
@@ -62,18 +60,12 @@ const request = async <T>(path: string, options?: FetchOptions): Promise<T | Api
       if (!text) return {} as T;
       return JSON.parse(text) as T;
    } catch {
-      return createError(
-         isApiConfigured()
-            ? 'Network error. Check that the API server is running and reachable.'
-            : API_NOT_CONFIGURED_MESSAGE
-      );
+      return createError('Network error. Is the API server running on port 3000?');
    }
 };
 
 /** GET /garage?_page=&_limit= */
 export const fetchGarageListPage = async (pageNo: number) => {
-   if (!isApiConfigured()) return createError(API_NOT_CONFIGURED_MESSAGE);
-
    const response = await fetch(`${API_BASE_URL}/garage?_page=${pageNo}&_limit=${GARAGE_PAGE_SIZE}`);
    if (!response.ok) return createError('Failed to load garage', response.status);
    const data = (await response.json()) as Car[];
@@ -90,8 +82,6 @@ export const fetchWinnersListPage = async ({
    sortField: WinnerSortField;
    sortOrder: SortOrder;
 }) => {
-   if (!isApiConfigured()) return createError(API_NOT_CONFIGURED_MESSAGE);
-
    const response = await fetch(
       `${API_BASE_URL}/winners?_page=${pageNo}&_limit=${WINNERS_PAGE_SIZE}&_sort=${sortField}&_order=${sortOrder}`
    );
