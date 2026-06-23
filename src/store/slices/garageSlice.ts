@@ -11,6 +11,7 @@ interface GarageState {
    isWinnerModalOpen: boolean;
    total: number;
    page: number;
+   error: string | null;
 }
 
 const initialState: GarageState = {
@@ -21,18 +22,20 @@ const initialState: GarageState = {
    isWinnerModalOpen: false,
    total: 0,
    page: 1,
+   error: null,
 };
 
-export const generateCars = createAsyncThunk<number, number, { state: RootState; rejectValue: { isFailed: boolean } }>(
-   'garage/generateCars',
-   async (count, { dispatch, getState, rejectWithValue }) => {
-      const response = await fetchGenerateCars(count);
-      if (isApiError(response)) return rejectWithValue({ isFailed: true });
-      const { page } = getState().garage;
-      await dispatch(fetchGaragePage(page));
-      return response.total;
-   }
-);
+export const generateCars = createAsyncThunk<
+   number,
+   number,
+   { state: RootState; rejectValue: { isFailed: boolean; errorMessage: string } }
+>('garage/generateCars', async (count, { dispatch, getState, rejectWithValue }) => {
+   const response = await fetchGenerateCars(count);
+   if (isApiError(response)) return rejectWithValue({ isFailed: true, errorMessage: response.errors.message });
+   const { page } = getState().garage;
+   await dispatch(fetchGaragePage(page));
+   return response.total;
+});
 
 export const createCar = createAsyncThunk<Car, CarInput, { state: RootState; rejectValue: { isFailed: boolean } }>(
    'garage/createCar',
@@ -122,9 +125,14 @@ const garageSlice = createSlice({
             state.total = Number(payload.headers['x-total-count']);
             state.page = meta.arg;
             state.isLoading = false;
+            state.error = null;
          })
-         .addCase(fetchGaragePage.rejected, (state) => {
+         .addCase(fetchGaragePage.rejected, (state, action) => {
             state.isLoading = false;
+            state.error = action.payload?.errorMessage ?? 'Failed to load garage';
+         })
+         .addCase(generateCars.rejected, (state, action) => {
+            state.error = action.payload?.errorMessage ?? 'Failed to generate cars';
          });
    },
 });

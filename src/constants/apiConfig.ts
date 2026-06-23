@@ -44,4 +44,4 @@ export const API_BASE_URL = resolveApiBaseUrl();
 export const isApiConfigured = (): boolean => API_BASE_URL.length > 0;
 
 export const API_NOT_CONFIGURED_MESSAGE =
-   'API is not configured for GitHub Pages. Deploy async-race-api (folder /api) to Render and set APP_CONFIG.apiUrl in public/api-config.js, then run npm run deploy.';
+   'API is not configured. Deploy the /api folder to Render, set APP_CONFIG.apiUrl in public/api-config.js, then run npm run deploy.';
