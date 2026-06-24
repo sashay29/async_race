@@ -1,13 +1,15 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { generateCars, setRace } from 'store/slices/garageSlice';
+import { GENERATE_CARS_COUNT, RACE_STATUS } from 'constants/race';
+import { useIsRaceLocked } from 'components/Garage/hooks/useIsRaceLocked';
 import Button from 'components/Ui/Button/Button';
 import styles from './GarageToolbar.module.css';
 
 function GarageToolbar() {
    const dispatch = useAppDispatch();
    const { total, isLoading, race } = useAppSelector((state) => state.garage);
-   const isRaceLocked = race === 'started' || race === 'finished';
+   const isRaceLocked = useIsRaceLocked();
 
    return (
       <section className={styles.aside} aria-labelledby="garage-heading">
@@ -20,14 +22,18 @@ function GarageToolbar() {
             </span>
          </div>
          <div className={styles.actions} role="group" aria-label="Race actions">
-            <Button variant="primary" disabled={isLoading || isRaceLocked || total === 0} onClick={() => dispatch(setRace('started'))}>
+            <Button
+               variant="primary"
+               disabled={isLoading || isRaceLocked || total === 0}
+               onClick={() => dispatch(setRace(RACE_STATUS.STARTED))}
+            >
                Race
             </Button>
-            <Button disabled={isLoading || race === 'stopped'} onClick={() => dispatch(setRace('stopped'))}>
+            <Button disabled={isLoading || race === RACE_STATUS.STOPPED} onClick={() => dispatch(setRace(RACE_STATUS.STOPPED))}>
                Reset
             </Button>
-            <Button variant="accent" disabled={isLoading || isRaceLocked} onClick={() => dispatch(generateCars(100))}>
-               Generate 100
+            <Button variant="accent" disabled={isLoading || isRaceLocked} onClick={() => dispatch(generateCars(GENERATE_CARS_COUNT))}>
+               Generate {GENERATE_CARS_COUNT}
             </Button>
          </div>
       </section>

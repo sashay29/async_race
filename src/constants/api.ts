@@ -2,6 +2,17 @@ import { GARAGE_PAGE_SIZE, WINNERS_PAGE_SIZE, getRandomCarName, getRandomColor, 
 import { API_BASE_URL } from 'constants/apiConfig';
 import type { Car, CarInput } from 'store/types/car';
 
+export const ENGINE_MODE = {
+   STARTED: 'started',
+   STOPPED: 'stopped',
+   DRIVE: 'drive',
+} as const;
+
+export type EngineMode = (typeof ENGINE_MODE)[keyof typeof ENGINE_MODE];
+
+export const TOTAL_COUNT_HEADER = 'x-total-count';
+export const ENGINE_FAILURE_HTTP_STATUS = 500;
+
 export type WinnerSortField = 'wins' | 'time';
 export type SortOrder = 'ASC' | 'DESC';
 
@@ -40,7 +51,7 @@ const parseTotalCount = (response: Response): number => Number(response.headers.
 
 const toListResponse = <T>(data: T[], total: number) => ({
    data,
-   headers: { 'x-total-count': String(total) },
+   headers: { [TOTAL_COUNT_HEADER]: String(total) },
 });
 
 type FetchOptions = {
@@ -184,7 +195,7 @@ export const fetchUpdateWinner = async (winner: ApiWinner) =>
 export const fetchDeleteWinner = async (id: number) => request<Record<string, never>>(`/winners/${id}`, { method: 'DELETE' });
 
 /** PATCH /engine?id=&status=started|stopped */
-export const fetchCarEngineMode = async (id: number, mode: 'started' | 'stopped') => {
+export const fetchCarEngineMode = async (id: number, mode: typeof ENGINE_MODE.STARTED | typeof ENGINE_MODE.STOPPED) => {
    const result = await request<EngineResponse>(`/engine?id=${id}&status=${mode}`, { method: 'PATCH' });
    if (isApiError(result)) return result;
    return result;
@@ -192,7 +203,7 @@ export const fetchCarEngineMode = async (id: number, mode: 'started' | 'stopped'
 
 /** PATCH /engine?id=&status=drive */
 export const fetchCarDrive = async (id: number) => {
-   const result = await request<{ success: boolean }>(`/engine?id=${id}&status=drive`, { method: 'PATCH' });
+   const result = await request<{ success: boolean }>(`/engine?id=${id}&status=${ENGINE_MODE.DRIVE}`, { method: 'PATCH' });
    if (isApiError(result)) {
       return { isFailed: true as const, status: result.status, errors: { message: 'Engine failure', list: null } };
    }

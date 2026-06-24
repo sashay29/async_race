@@ -1,4 +1,5 @@
 import React, { CSSProperties, AnimationEventHandler, useId } from 'react';
+import { CAR_ICON_HEIGHT, CAR_ICON_WIDTH, DEFAULT_CAR_COLOR } from 'constants/ui';
 import CarIconShape from './CarIconShape';
 
 interface CarIconProps {
@@ -12,9 +13,9 @@ interface CarIconProps {
 }
 
 function CarIcon({
-   width = 88,
-   height = 36,
-   fill = '#00e5ff',
+   width = CAR_ICON_WIDTH,
+   height = CAR_ICON_HEIGHT,
+   fill = DEFAULT_CAR_COLOR,
    className = '',
    style,
    handleAnimationEnd,

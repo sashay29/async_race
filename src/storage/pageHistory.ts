@@ -1,24 +1,24 @@
-type PageKey = 'garage' | 'winners';
+import { STORAGE_KEYS } from 'constants/storage';
+import { PAGE_KEYS } from 'constants/routes';
+import type { PageKey } from 'constants/routes';
 
 type PageHistory = Partial<Record<PageKey, number>>;
 
-const STORAGE_KEY = 'asyncRacePageHistory';
-
 const readHistory = (): PageHistory => {
    try {
-      return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}') as PageHistory;
+      return JSON.parse(sessionStorage.getItem(STORAGE_KEYS.PAGE_HISTORY) || '{}') as PageHistory;
    } catch {
       return {};
    }
 };
 
 const writeHistory = (data: PageHistory): void => {
-   sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+   sessionStorage.setItem(STORAGE_KEYS.PAGE_HISTORY, JSON.stringify(data));
 };
 
 export const initPageHistory = (): void => {
-   if (!sessionStorage.getItem(STORAGE_KEY)) {
-      writeHistory({ garage: 1, winners: 1 });
+   if (!sessionStorage.getItem(STORAGE_KEYS.PAGE_HISTORY)) {
+      writeHistory({ [PAGE_KEYS.GARAGE]: 1, [PAGE_KEYS.WINNERS]: 1 });
    }
 };
 

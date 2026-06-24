@@ -4,20 +4,15 @@ import {
    fetchNewWinner,
    fetchUpdateWinner,
    fetchDeleteWinner,
-   fetchCarData,
    isApiError,
    SortOrder,
+   TOTAL_COUNT_HEADER,
    WinnerSortField,
 } from 'constants/api';
+import { FALLBACK_CAR_COLOR } from 'constants/ui';
 import type { RootState } from 'store/rootState';
-import type { Car } from 'store/types/car';
 import type { Winner } from 'store/types/winner';
-
-interface ApiWinner {
-   id: number;
-   wins: number;
-   time: number;
-}
+import { mapWinnersWithCars } from 'store/winnersMappers';
 
 interface WinnersState {
    items: Winner[];
@@ -39,23 +34,6 @@ const initialState: WinnersState = {
    sortOrder: 'ASC',
 };
 
-const mapWinnerWithCar = (winner: ApiWinner, car?: Car): Winner => ({
-   ...winner,
-   name: car?.name ?? '',
-   color: car?.color ?? '#ccc',
-});
-
-const mapWinnersWithCars = async (winners: ApiWinner[], cars: Car[]): Promise<Winner[]> =>
-   Promise.all(
-      winners.map(async (winner) => {
-         const cachedCar = cars.find((item) => item.id === winner.id);
-         if (cachedCar) return mapWinnerWithCar(winner, cachedCar);
-
-         const [car] = await fetchCarData(winner.id);
-         return mapWinnerWithCar(winner, car);
-      })
-   );
-
 export const recordWinner = createAsyncThunk<Winner, Partial<Winner>, { state: RootState; rejectValue: { isFailed: boolean } }>(
    'winners/record',
    async (carData, { rejectWithValue }) => {
@@ -68,7 +46,7 @@ export const recordWinner = createAsyncThunk<Winner, Partial<Winner>, { state: R
       return {
          ...response,
          name: carData.name || 'car',
-         color: carData.color || '#ccc',
+         color: carData.color || FALLBACK_CAR_COLOR,
       };
    }
 );
@@ -163,7 +141,7 @@ const winnersSlice = createSlice({
          })
          .addCase(fetchWinnersPage.fulfilled, (state, { payload, meta }) => {
             state.items = payload.data;
-            state.total = Number(payload.headers['x-total-count']);
+            state.total = Number(payload.headers[TOTAL_COUNT_HEADER]);
             state.page = meta.arg;
             state.isLoading = false;
          })

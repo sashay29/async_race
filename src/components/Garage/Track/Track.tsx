@@ -1,5 +1,6 @@
 import React from 'react';
 import { GARAGE_PAGE_SIZE } from 'constants/carData';
+import { useIsRaceRunning } from 'components/Garage/hooks/useIsRaceRunning';
 import type { Car } from 'store/types/car';
 import TrackLane from 'components/Garage/TrackLane/TrackLane';
 import Pagination from 'components/Ui/Pagination/Pagination';
@@ -13,6 +14,8 @@ interface TrackProps {
 }
 
 function Track({ cars, page, total, onPageChange }: TrackProps) {
+   const isRaceRunning = useIsRaceRunning();
+
    return (
       <section className={styles.garageTable} aria-label="Garage track">
          <div className={styles.trackHeader} role="row">
@@ -34,7 +37,13 @@ function Track({ cars, page, total, onPageChange }: TrackProps) {
             </div>
          </div>
          {total > GARAGE_PAGE_SIZE && (
-            <Pagination total={total} page={page} pageSize={GARAGE_PAGE_SIZE} onPageChange={onPageChange} />
+            <Pagination
+               total={total}
+               page={page}
+               pageSize={GARAGE_PAGE_SIZE}
+               onPageChange={onPageChange}
+               isBlocked={isRaceRunning}
+            />
          )}
       </section>
    );

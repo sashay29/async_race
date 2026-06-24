@@ -52,7 +52,7 @@
    bottom: 4px;
    z-index: 2;
    animation-timing-function: linear;
-   animation-delay: 4.2s;
+   animation-delay: var(--start-light-delay);
    animation-fill-mode: forwards;
    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 12px rgba(0, 229, 255, 0.25));
 }

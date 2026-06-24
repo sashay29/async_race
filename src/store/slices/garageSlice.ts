@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchGenerateCars, fetchGarageListPage, fetchNewCar, fetchDeleteCar, fetchUpdateCar, isApiError } from 'constants/api';
+import { fetchGenerateCars, fetchGarageListPage, fetchNewCar, fetchDeleteCar, fetchUpdateCar, isApiError, TOTAL_COUNT_HEADER } from 'constants/api';
+import { GARAGE_PAGE_SIZE } from 'constants/carData';
+import { RACE_STATUS } from 'constants/race';
 import type { RootState } from 'store/rootState';
 import type { Car, CarInput, RaceStatus } from 'store/types/car';
 
@@ -18,7 +20,7 @@ const initialState: GarageState = {
    cars: [],
    selectedCar: undefined,
    isLoading: true,
-   race: 'stopped',
+   race: RACE_STATUS.STOPPED,
    isWinnerModalOpen: false,
    total: 0,
    page: 1,
@@ -100,7 +102,7 @@ const garageSlice = createSlice({
       builder
          .addCase(createCar.fulfilled, (state, { payload }) => {
             state.total += 1;
-            if (state.cars.length < 7) {
+            if (state.cars.length < GARAGE_PAGE_SIZE) {
                state.cars.push(payload);
             }
          })
@@ -122,7 +124,7 @@ const garageSlice = createSlice({
          })
          .addCase(fetchGaragePage.fulfilled, (state, { payload, meta }) => {
             state.cars = payload.data;
-            state.total = Number(payload.headers['x-total-count']);
+            state.total = Number(payload.headers[TOTAL_COUNT_HEADER]);
             state.page = meta.arg;
             state.isLoading = false;
             state.error = null;

@@ -1,3 +1,5 @@
+import type { RaceStatus } from 'constants/race';
+
 export interface Car {
    id: number;
    name: string;
@@ -9,4 +11,4 @@ export interface CarInput {
    color: string;
 }
 
-export type RaceStatus = 'stopped' | 'started' | 'finished';
+export type { RaceStatus };

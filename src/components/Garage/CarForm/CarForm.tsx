@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import { useAppSelector } from 'store/hooks';
+import { useIsRaceLocked } from 'components/Garage/hooks/useIsRaceLocked';
 import { useCarForm } from './useCarForm';
 import CarFormFields from './CarFormFields';
 import styles from './CarForm.module.css';
@@ -62,7 +63,7 @@ function UpdateCarFormSection({ form, isRaceLocked, hasSelectedCar }: UpdateCarF
 }
 
 function CarForm() {
-   const isRaceLocked = useAppSelector((state) => state.garage.race === 'started' || state.garage.race === 'finished');
+   const isRaceLocked = useIsRaceLocked();
    const hasSelectedCar = useAppSelector((state) => Boolean(state.garage.selectedCar));
    const form = useCarForm();
 

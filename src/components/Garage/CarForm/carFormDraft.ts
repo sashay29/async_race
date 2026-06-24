@@ -1,6 +1,6 @@
+import { STORAGE_KEYS } from 'constants/storage';
+import { DEFAULT_CAR_COLOR } from 'constants/ui';
 import type { Car, CarInput } from 'store/types/car';
-
-const DRAFT_KEY = 'garageFormDraft';
 
 interface FormDraft {
    newCar: CarInput;
@@ -8,13 +8,13 @@ interface FormDraft {
 }
 
 const defaultDraft = (): FormDraft => ({
-   newCar: { name: '', color: '#00e5ff' },
-   editCar: { name: '', color: '#00e5ff', id: 0 },
+   newCar: { name: '', color: DEFAULT_CAR_COLOR },
+   editCar: { name: '', color: DEFAULT_CAR_COLOR, id: 0 },
 });
 
 export const loadNewCarDraft = (): CarInput => {
    try {
-      const saved = sessionStorage.getItem(DRAFT_KEY);
+      const saved = sessionStorage.getItem(STORAGE_KEYS.GARAGE_FORM_DRAFT);
       return saved ? { ...defaultDraft().newCar, ...JSON.parse(saved).newCar } : defaultDraft().newCar;
    } catch {
       return defaultDraft().newCar;
@@ -22,7 +22,7 @@ export const loadNewCarDraft = (): CarInput => {
 };
 
 export const saveNewCarDraft = (newCar: CarInput): void => {
-   sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ newCar }));
+   sessionStorage.setItem(STORAGE_KEYS.GARAGE_FORM_DRAFT, JSON.stringify({ newCar }));
 };
 
 export const defaultEditCar = (): Car => defaultDraft().editCar;

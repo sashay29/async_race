@@ -1,12 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import { LaneStatus } from 'constants/race';
 import Button from 'components/Ui/Button/Button';
 import { buildLaneControls } from './laneControlsConfig';
 import styles from './LaneControls.module.css';
 
 interface LaneControlsProps {
-   status: string;
+   status: LaneStatus;
    selectedCarId?: number;
    carId: number;
    carName: string;

@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink as RouterNavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { isRaceLocked, RACE_STATUS } from 'constants/race';
 import { setRace } from 'store/slices/garageSlice';
 import styles from './NavLink.module.css';
 
@@ -18,8 +19,8 @@ function NavLink({ to, label }: NavLinkProps) {
       <li>
          <RouterNavLink
             onClick={() => {
-               if (race === 'started' || race === 'finished') {
-                  dispatch(setRace('stopped'));
+               if (isRaceLocked(race)) {
+                  dispatch(setRace(RACE_STATUS.STOPPED));
                }
             }}
             to={to}

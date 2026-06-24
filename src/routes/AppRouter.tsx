@@ -1,5 +1,6 @@
 import React from 'react';
 import { createHashRouter, Navigate, RouteObject } from 'react-router-dom';
+import { ROUTE_SEGMENTS, ROUTES } from 'constants/routes';
 import App from 'app/App';
 import GaragePage from 'pages/GaragePage/GaragePage';
 import WinnersPage from 'pages/WinnersPage/WinnersPage';
@@ -11,9 +12,9 @@ function createAppRouter(): ReturnType<typeof createHashRouter> {
          path: '/',
          element: <App />,
          children: [
-            { index: true, element: <Navigate replace to="/garage" /> },
-            { path: 'garage', element: <GaragePage /> },
-            { path: 'winners', element: <WinnersPage /> },
+            { index: true, element: <Navigate replace to={ROUTES.GARAGE} /> },
+            { path: ROUTE_SEGMENTS.GARAGE, element: <GaragePage /> },
+            { path: ROUTE_SEGMENTS.WINNERS, element: <WinnersPage /> },
             { path: '*', element: <NotFoundPage /> },
          ],
       },

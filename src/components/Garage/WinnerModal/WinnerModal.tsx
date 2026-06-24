@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { WINNER_MODAL_AUTO_CLOSE_MS } from 'constants/race';
 import { closeWinnerModal } from 'store/slices/garageSlice';
 import styles from './WinnerModal.module.css';
 
@@ -12,7 +13,7 @@ function WinnerModal() {
 
    useEffect(() => {
       if (!isOpen) return undefined;
-      const timer = window.setTimeout(() => dispatch(closeWinnerModal()), 5000);
+      const timer = window.setTimeout(() => dispatch(closeWinnerModal()), WINNER_MODAL_AUTO_CLOSE_MS);
       return () => clearTimeout(timer);
    }, [isOpen, dispatch]);
 

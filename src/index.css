@@ -46,6 +46,7 @@ body {
    --shadow-md: 0 16px 48px rgba(0, 0, 0, 0.5);
    --shadow-glow: 0 0 32px rgba(0, 229, 255, 0.15);
    --car-width: 88px;
+   --start-light-delay: 4.2s;
    --lane-meta-width: 140px;
    --font-display: 'Orbitron', system-ui, sans-serif;
    --font-size-xs: 1.1rem;

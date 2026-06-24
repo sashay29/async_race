@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { validateCarName } from 'constants/carData';
+import { STORAGE_KEYS } from 'constants/storage';
+import { DEFAULT_CAR_COLOR } from 'constants/ui';
 import { createCar, updateCar, selectCar } from 'store/slices/garageSlice';
 import type { Car, CarInput } from 'store/types/car';
 import { defaultEditCar, loadNewCarDraft, saveNewCarDraft } from './carFormDraft';
 
-const emptyCarInput = (): CarInput => ({ name: '', color: '#00e5ff' });
+const emptyCarInput = (): CarInput => ({ name: '', color: DEFAULT_CAR_COLOR });
 
 export function useCarForm() {
    const dispatch = useAppDispatch();
@@ -29,7 +31,7 @@ export function useCarForm() {
       submitNew: () => {
          if (validateCarName(newCar.name)) return;
          dispatch(createCar(newCar));
-         sessionStorage.removeItem('garageFormDraft');
+         sessionStorage.removeItem(STORAGE_KEYS.GARAGE_FORM_DRAFT);
          setNewCar(emptyCarInput());
       },
       submitEdit: () => {
